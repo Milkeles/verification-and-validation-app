@@ -97,7 +97,7 @@ namespace KitchenOrders
                 Button button = new Button();
                 button.Text = dish;
                 button.AccessibleName = dish;
-                button.Size = new Size(150, 95);
+                button.Size = new Size(180, 130);
                 button.BackColor = Color.White;
                 button.FlatStyle = FlatStyle.Flat;
                 button.FlatAppearance.BorderColor = Color.FromArgb(157, 184, 176);
@@ -117,7 +117,7 @@ namespace KitchenOrders
                     try
                     {
                         Image originalImg = Image.FromFile(imagePath);
-                        button.Image = new Bitmap(originalImg, new Size(48, 48));
+                        button.Image = new Bitmap(originalImg, new Size(72, 72));
 
                         button.TextImageRelation = TextImageRelation.ImageAboveText;
                         button.ImageAlign = ContentAlignment.MiddleCenter;
