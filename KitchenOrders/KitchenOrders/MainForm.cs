@@ -32,7 +32,7 @@ namespace KitchenOrders
             {
                 orders.Add(i, new List<OrderLine>());
                 Button button = new Button();
-                button.Size = new Size(110, 70);
+                button.Size = new Size(100, 70);
                 button.Text = "Маса " + i + "\n" + seats[i - 1] + " места";
                 button.AccessibleName = "Маса " + i;
                 button.Tag = i;

@@ -196,7 +196,7 @@
             this.btnPlus.TabIndex = 1;
             this.btnPlus.Click += new System.EventHandler(this.QuantityClick);
             this.pnlQuantity.Controls.Add(this.btnPlus);
-            this.btnRemove.Text = "✕ Премахни";
+            this.btnRemove.Text = "× Премахни";
             this.btnRemove.Size = new System.Drawing.Size(190, 44);
             this.btnRemove.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnRemove.TabIndex = 2;
