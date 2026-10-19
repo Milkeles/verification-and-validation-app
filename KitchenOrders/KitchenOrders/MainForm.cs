@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -18,7 +19,7 @@ namespace KitchenOrders
             { "Предястия", new[] { "Таратор", "Шопска салата", "Снежанка", "Печени чушки" } },
             { "Основни", new[] { "Телешки бургер", "Мусака", "Пилешко филе", "Свинска пържола", "Паста с гъби", "Кюфтета на скара" } },
             { "Напитки", new[] { "Айрян", "Лимонада", "Кафе", "Минерална вода" } },
-            { "Десерти", new[] { "Баница", "Палачинка", "Торта", "Крем карамел" } }
+            { "Десерти", new[] { "Баклава", "Палачинка", "Торта", "Крем карамел" } }
         };
         Dictionary<int, List<OrderLine>> orders = new Dictionary<int, List<OrderLine>>();
         int currentTable;
@@ -96,12 +97,38 @@ namespace KitchenOrders
                 Button button = new Button();
                 button.Text = dish;
                 button.AccessibleName = dish;
-                button.Size = new Size(150, 70);
+                button.Size = new Size(150, 95);
                 button.BackColor = Color.White;
                 button.FlatStyle = FlatStyle.Flat;
                 button.FlatAppearance.BorderColor = Color.FromArgb(157, 184, 176);
                 button.TabIndex = flpDishes.Controls.Count;
                 button.Click += DishClick;
+
+                string imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", dish + ".jpg");
+
+                if (!File.Exists(imagePath))
+                {
+                    // Ако .jpg не е намерен, опитваме с .png
+                    imagePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "Images", dish + ".png");
+                }
+
+                if (File.Exists(imagePath))
+                {
+                    try
+                    {
+                        Image originalImg = Image.FromFile(imagePath);
+                        button.Image = new Bitmap(originalImg, new Size(48, 48));
+
+                        button.TextImageRelation = TextImageRelation.ImageAboveText;
+                        button.ImageAlign = ContentAlignment.MiddleCenter;
+                        button.TextAlign = ContentAlignment.BottomCenter;
+                    }
+                    catch
+                    {
+                        // При евентуален проблем с картинката, бутонът продължава да работи само с текст
+                    }
+                }
+
                 flpDishes.Controls.Add(button);
             }
         }
@@ -315,6 +342,11 @@ namespace KitchenOrders
             order.Clear();
             bonNo++;
             ShowOrder(null);
+        }
+
+        private void flpDishes_Paint(object sender, PaintEventArgs e)
+        {
+
         }
     }
 }
