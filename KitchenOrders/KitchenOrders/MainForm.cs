@@ -11,6 +11,8 @@ namespace KitchenOrders
     public partial class MainForm : Form
     {
         static readonly Regex validText = new Regex(@"^[\p{L}\d .,!\-„“""()]{1,40}$");
+        static readonly Regex validItem = new Regex(@"^\p{L}{2}[\p{L}\d .,\-]{0,38}$");
+        static readonly Regex validName = new Regex(@"^\p{L}{2}[\p{L} .\-]{0,38}$");
         Dictionary<string, string[]> menu = new Dictionary<string, string[]>
         {
             { "Предястия", new[] { "Таратор", "Шопска салата", "Снежанка", "Печени чушки" } },
@@ -249,13 +251,13 @@ namespace KitchenOrders
 
         void ExtraClick(object sender, EventArgs e)
         {
-            if (!validText.IsMatch(txtExtra.Text))
+            if (!validItem.IsMatch(txtExtra.Text.Trim()))
             {
                 MessageBox.Show(this, "Невалидно име на артикул.");
                 txtExtra.Focus();
                 return;
             }
-            if (AddLine(txtExtra.Text)) txtExtra.Clear();
+            if (AddLine(txtExtra.Text.Trim())) txtExtra.Clear();
         }
 
         void ExtraKeyDown(object sender, KeyEventArgs e)
@@ -285,7 +287,7 @@ namespace KitchenOrders
                 MessageBox.Show(this, "Поръчката е празна.");
                 return;
             }
-            if (!validText.IsMatch(txtWaiter.Text))
+            if (!validName.IsMatch(txtWaiter.Text.Trim()))
             {
                 MessageBox.Show(this, "Въведете валидно име на сервитьор.");
                 txtWaiter.Focus();
